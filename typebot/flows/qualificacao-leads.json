@@ -1,0 +1,328 @@
+{
+  "name": "Qualificação Leads Imóveis DF",
+  "description": "Fluxo para qualificar leads de imóveis em Brasília/DF via WhatsApp",
+  "version": "1.0",
+  "blocks": [
+    {
+      "id": "start",
+      "type": "start",
+      "position": { "x": 100, "y": 100 },
+      "next": "boas_vindas"
+    },
+    {
+      "id": "boas_vindas",
+      "type": "text",
+      "position": { "x": 100, "y": 200 },
+      "content": "Olá! 👋 Sou o assistente virtual da **Imóveis DF**.\n\nEstou aqui para te ajudar a encontrar o imóvel ideal em Brasília de forma rápida e personalizada.\n\nPara começar, me diga: **qual seu nome?**",
+      "next": "capturar_nome"
+    },
+    {
+      "id": "capturar_nome",
+      "type": "input",
+      "position": { "x": 100, "y": 300 },
+      "variable": "nome_cliente",
+      "placeholder": "Digite seu nome",
+      "next": "tipo_negocio"
+    },
+    {
+      "id": "tipo_negocio",
+      "type": "buttons",
+      "position": { "x": 100, "y": 400 },
+      "content": "Oi, {{nome_cliente}}! 😊\n\nVocê busca imóvel para:",
+      "options": [
+        { "label": "🏠 Comprar", "value": "comprar" },
+        { "label": "🏠 Alugar", "value": "alugar" },
+        { "label": "📋 Quero anunciar meu imóvel", "value": "anunciar" },
+        { "label": "🤝 Parceria/Indicação", "value": "parceria" }
+      ],
+      "variable": "tipo_negocio",
+      "next": "verificar_tipo"
+    },
+    {
+      "id": "verificar_tipo",
+      "type": "condition",
+      "position": { "x": 100, "y": 500 },
+      "conditions": [
+        { "variable": "tipo_negocio", "operator": "equals", "value": "comprar", "next": "comprar_tipo" },
+        { "variable": "tipo_negocio", "operator": "equals", "value": "alugar", "next": "alugar_tipo" },
+        { "variable": "tipo_negocio", "operator": "equals", "value": "anunciar", "next": "captacao_imovel" },
+        { "variable": "tipo_negocio", "operator": "equals", "value": "parceria", "next": "parceria" }
+      ],
+      "fallback": "comprar_tipo"
+    },
+    {
+      "id": "comprar_tipo",
+      "type": "buttons",
+      "position": { "x": 100, "y": 600 },
+      "content": "Perfeito! Que tipo de imóvel você procura para **comprar**?",
+      "options": [
+        { "label": "🏠 Casa", "value": "casa" },
+        { "label": "🏢 Apartamento", "value": "apartamento" },
+        { "label": "🏘️ Cobertura", "value": "cobertura" },
+        { "label": "🏗️ Terreno/Lote", "value": "terreno" },
+        { "label": "🏪 Comercial/Sala", "value": "comercial" }
+      ],
+      "variable": "tipo_imovel",
+      "next": "comprar_regiao"
+    },
+    {
+      "id": "alugar_tipo",
+      "type": "buttons",
+      "position": { "x": 100, "y": 600 },
+      "content": "Entendido! Que tipo de imóvel você procura para **alugar**?",
+      "options": [
+        { "label": "🏠 Casa", "value": "casa" },
+        { "label": "🏢 Apartamento", "value": "apartamento" },
+        { "label": "🏘️ Kitnet/Studio", "value": "kitnet" },
+        { "label": "🏪 Comercial/Sala", "value": "comercial" }
+      ],
+      "variable": "tipo_imovel",
+      "next": "alugar_regiao"
+    },
+    {
+      "id": "comprar_regiao",
+      "type": "buttons",
+      "position": { "x": 100, "y": 700 },
+      "content": "Ótimo! Em qual **região de Brasília/DF** você tem preferência?",
+      "options": [
+        { "label": "🏛️ Asa Norte", "value": "asa_norte" },
+        { "label": "🏛️ Asa Sul", "value": "asa_sul" },
+        { "label": "🌳 Lago Norte", "value": "lago_norte" },
+        { "label": "🌳 Lago Sul", "value": "lago_sul" },
+        { "label": "🏙️ Sudoeste", "value": "sudoeste" },
+        { "label": "🏙️ Noroeste", "value": "noroeste" },
+        { "label": "🌾 Park Way", "value": "park_way" },
+        { "label": "🌾 Jardim Botânico", "value": "jardim_botanico" },
+        { "label": "🏡 Águas Claras", "value": "aguas_claras" },
+        { "label": "🏡 Taguatinga", "value": "taguatinga" },
+        { "label": "🏡 Ceilândia", "value": "ceilandia" },
+        { "label": "🏡 Samambaia", "value": "samambaia" },
+        { "label": "📍 Outra região", "value": "outra" }
+      ],
+      "variable": "regiao",
+      "next": "comprar_valor"
+    },
+    {
+      "id": "alugar_regiao",
+      "type": "buttons",
+      "position": { "x": 100, "y": 700 },
+      "content": "Entendido! Em qual **região de Brasília/DF** você prefere?",
+      "options": [
+        { "label": "🏛️ Asa Norte", "value": "asa_norte" },
+        { "label": "🏛️ Asa Sul", "value": "asa_sul" },
+        { "label": "🌳 Lago Norte", "value": "lago_norte" },
+        { "label": "🌳 Lago Sul", "value": "lago_sul" },
+        { "label": "🏙️ Sudoeste", "value": "sudoeste" },
+        { "label": "🏙️ Noroeste", "value": "noroeste" },
+        { "label": "🌾 Park Way", "value": "park_way" },
+        { "label": "🌾 Jardim Botânico", "value": "jardim_botanico" },
+        { "label": "🏡 Águas Claras", "value": "aguas_claras" },
+        { "label": "🏡 Taguatinga", "value": "taguatinga" },
+        { "label": "🏡 Ceilândia", "value": "ceilandia" },
+        { "label": "🏡 Samambaia", "value": "samambaia" },
+        { "label": "📍 Outra região", "value": "outra" }
+      ],
+      "variable": "regiao",
+      "next": "alugar_valor"
+    },
+    {
+      "id": "comprar_valor",
+      "type": "buttons",
+      "position": { "x": 100, "y": 800 },
+      "content": "Qual sua **faixa de valor** para compra?",
+      "options": [
+        { "label": "💰 Até R$ 300.000", "value": "ate_300k" },
+        { "label": "💰 R$ 300.000 - R$ 500.000", "value": "300_500k" },
+        { "label": "💰 R$ 500.000 - R$ 800.000", "value": "500_800k" },
+        { "label": "💰 R$ 800.000 - R$ 1.200.000", "value": "800_1200k" },
+        { "label": "💰 R$ 1.200.000 - R$ 2.000.000", "value": "1200_2000k" },
+        { "label": "💰 Acima de R$ 2.000.000", "value": "acima_2m" }
+      ],
+      "variable": "valor_compra",
+      "next": "comprar_quartos"
+    },
+    {
+      "id": "alugar_valor",
+      "type": "buttons",
+      "position": { "x": 100, "y": 800 },
+      "content": "Qual seu **orçamento mensal** para aluguel?",
+      "options": [
+        { "label": "💰 Até R$ 1.500", "value": "ate_1500" },
+        { "label": "💰 R$ 1.500 - R$ 2.500", "value": "1500_2500" },
+        { "label": "💰 R$ 2.500 - R$ 4.000", "value": "2500_4000" },
+        { "label": "💰 R$ 4.000 - R$ 6.000", "value": "4000_6000" },
+        { "label": "💰 R$ 6.000 - R$ 10.000", "value": "6000_10000" },
+        { "label": "💰 Acima de R$ 10.000", "value": "acima_10000" }
+      ],
+      "variable": "valor_aluguel",
+      "next": "alugar_quartos"
+    },
+    {
+      "id": "comprar_quartos",
+      "type": "buttons",
+      "position": { "x": 100, "y": 900 },
+      "content": "Quantos **quartos** você precisa?",
+      "options": [
+        { "label": "1 quarto", "value": "1" },
+        { "label": "2 quartos", "value": "2" },
+        { "label": "3 quartos", "value": "3" },
+        { "label": "4+ quartos", "value": "4" }
+      ],
+      "variable": "quartos",
+      "next": "comprar_urgencia"
+    },
+    {
+      "id": "alugar_quartos",
+      "type": "buttons",
+      "position": { "x": 100, "y": 900 },
+      "content": "Quantos **quartos** você precisa?",
+      "options": [
+        { "label": "1 quarto", "value": "1" },
+        { "label": "2 quartos", "value": "2" },
+        { "label": "3 quartos", "value": "3" },
+        { "label": "4+ quartos", "value": "4" }
+      ],
+      "variable": "quartos",
+      "next": "alugar_urgencia"
+    },
+    {
+      "id": "comprar_urgencia",
+      "type": "buttons",
+      "position": { "x": 100, "y": 1000 },
+      "content": "Qual a **urgência** da sua busca?",
+      "options": [
+        { "label": "🚨 Urgente (até 30 dias)", "value": "urgente" },
+        { "label": "⏳ Próximos 3 meses", "value": "3_meses" },
+        { "label": "📅 Próximos 6 meses", "value": "6_meses" },
+        { "label": "🔍 Só pesquisando por enquanto", "value": "pesquisando" }
+      ],
+      "variable": "urgencia",
+      "next": "capturar_telefone"
+    },
+    {
+      "id": "alugar_urgencia",
+      "type": "buttons",
+      "position": { "x": 100, "y": 1000 },
+      "content": "Qual a **urgência** para se mudar?",
+      "options": [
+        { "label": "🚨 Urgente (até 30 dias)", "value": "urgente" },
+        { "label": "⏳ Próximos 3 meses", "value": "3_meses" },
+        { "label": "📅 Próximos 6 meses", "value": "6_meses" },
+        { "label": "🔍 Só pesquisando por enquanto", "value": "pesquisando" }
+      ],
+      "variable": "urgencia",
+      "next": "capturar_telefone"
+    },
+    {
+      "id": "captacao_imovel",
+      "type": "text",
+      "position": { "x": 400, "y": 600 },
+      "content": "Excelente! 🏠 Captamos imóveis em todo DF.\n\nNosso time de captação entrará em contato para:\n✅ Avaliação gratuita do seu imóvel\n✅ Fotos profissionais\n✅ Divulgação nos principais portais\n✅ Gestão completa de visitas\n\n**Qual o endereço do imóvel?**",
+      "next": "captacao_endereco"
+    },
+    {
+      "id": "captacao_endereco",
+      "type": "input",
+      "position": { "x": 400, "y": 700 },
+      "variable": "endereco_imovel",
+      "placeholder": "Ex: SQN 204 Bloco C, Asa Norte",
+      "next": "captacao_telefone"
+    },
+    {
+      "id": "parceria",
+      "type": "text",
+      "position": { "x": 400, "y": 600 },
+      "content": "Ótimo! 🤝 Adoramos parcerias.\n\nTrabalhamos com:\n• Corretores parceiros\n• Indicações de imóveis\n• Parcerias com construtoras\n• Portais imobiliários\n\n**Me conte como você gostaria de parceriar:**",
+      "next": "parceria_detalhes"
+    },
+    {
+      "id": "parceria_detalhes",
+      "type": "input",
+      "position": { "x": 400, "y": 700 },
+      "variable": "parceria_detalhes",
+      "placeholder": "Descreva sua proposta...",
+      "next": "capturar_telefone"
+    },
+    {
+      "id": "capturar_telefone",
+      "type": "input",
+      "position": { "x": 100, "y": 1100 },
+      "content": "Perfeito! {{nome_cliente}}, agora preciso do seu **WhatsApp com DDD** para nosso corretor especialista entrar em contato:",
+      "variable": "telefone",
+      "placeholder": "61 9xxxx-xxxx",
+      "next": "capturar_email"
+    },
+    {
+      "id": "capturar_email",
+      "type": "input",
+      "position": { "x": 100, "y": 1200 },
+      "content": "E seu **e-mail** (opcional, para envio de imóveis selecionados):",
+      "variable": "email",
+      "placeholder": "seu@email.com",
+      "next": "finalizar"
+    },
+    {
+      "id": "finalizar",
+      "type": "text",
+      "position": { "x": 100, "y": 1300 },
+      "content": "✅ **Cadastro concluído, {{nome_cliente}}!**\n\n📋 **Resumo do seu perfil:**\n• Tipo: {{tipo_negocio}}\n• Imóvel: {{tipo_imovel}}\n• Região: {{regiao}}\n• Valor: {{valor_compra}}{{valor_aluguel}}\n• Quartos: {{quartos}}\n• Urgência: {{urgencia}}\n\n🤝 Nosso corretor especialista em **{{regiao}}** entrará em contato no **{{telefone}}** em até **15 minutos** (horário comercial).\n\nEnquanto isso, pode acessar nosso site: **imoveisdf.com.br**\n\nObrigado por escolher a Imóveis DF! 🏠💚",
+      "next": "webhook_crm"
+    },
+    {
+      "id": "captacao_telefone",
+      "type": "input",
+      "position": { "x": 400, "y": 800 },
+      "content": "Qual seu **WhatsApp com DDD** para nosso time de captação ligar?",
+      "variable": "telefone_captacao",
+      "placeholder": "61 9xxxx-xxxx",
+      "next": "finalizar_captacao"
+    },
+    {
+      "id": "finalizar_captacao",
+      "type": "text",
+      "position": { "x": 400, "y": 900 },
+      "content": "✅ **Recebemos sua solicitação de captação!**\n\nNosso especialista em captação entrará em contato no **{{telefone_captacao}}** em até **30 minutos** para agendar a avaliação gratuita.\n\nObrigado! 🏠💚",
+      "next": "webhook_captacao"
+    },
+    {
+      "id": "webhook_crm",
+      "type": "webhook",
+      "position": { "x": 100, "y": 1400 },
+      "url": "http://n8n:5678/webhook/lead-qualificado",
+      "method": "POST",
+      "headers": { "Content-Type": "application/json" },
+      "body": "{\n  \"nome\": \"{{nome_cliente}}\",\n  \"telefone\": \"{{telefone}}\",\n  \"email\": \"{{email}}\",\n  \"tipo_negocio\": \"{{tipo_negocio}}\",\n  \"tipo_imovel\": \"{{tipo_imovel}}\",\n  \"regiao\": \"{{regiao}}\",\n  \"valor_compra\": \"{{valor_compra}}\",\n  \"valor_aluguel\": \"{{valor_aluguel}}\",\n  \"quartos\": \"{{quartos}}\",\n  \"urgencia\": \"{{urgencia}}\",\n  \"origem\": \"whatsapp_typebot\"\n}",
+      "next": "end"
+    },
+    {
+      "id": "webhook_captacao",
+      "type": "webhook",
+      "position": { "x": 400, "y": 1000 },
+      "url": "http://n8n:5678/webhook/captacao-imovel",
+      "method": "POST",
+      "headers": { "Content-Type": "application/json" },
+      "body": "{\n  \"endereco\": \"{{endereco_imovel}}\",\n  \"telefone\": \"{{telefone_captacao}}\",\n  \"origem\": \"whatsapp_typebot\"\n}",
+      "next": "end"
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "position": { "x": 100, "y": 1500 }
+    }
+  ],
+  "variables": {
+    "nome_cliente": "",
+    "tipo_negocio": "",
+    "tipo_imovel": "",
+    "regiao": "",
+    "valor_compra": "",
+    "valor_aluguel": "",
+    "quartos": "",
+    "urgencia": "",
+    "telefone": "",
+    "email": "",
+    "endereco_imovel": "",
+    "telefone_captacao": "",
+    "parceria_detalhes": ""
+  }
+}

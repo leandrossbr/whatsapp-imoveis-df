@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  # Evolution API - WhatsApp Web API
+  evolution:
+    image: atendai/evolution-api:v2.0.0
+    container_name: evolution-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - AUTHENTICATION_API_KEY=${EVOLUTION_API_KEY:-sua-chave-secreta-aqui}
+      - DATABASE_CONNECTION_URI=postgresql://postgres:postgres@postgres:5432/evolution
+      - REDIS_URI=redis://redis:6379
+      - CORS_ORIGIN=*
+      - LOG_LEVEL=INFO
+      - DEL_INSTANCE_ON_LOGOUT=false
+    volumes:
+      - ./evolution/config:/evolution/config
+      - evolution_media:/evolution/instances
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - whatsapp-network
+
+  # Typebot - Chatbot visual
+  typebot:
+    image: baptistearno/typebot-builder:latest
+    container_name: typebot-builder
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/typebot
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXT_PUBLIC_VIEWER_URL=http://localhost:3001
+      - ENCRYPTION_SECRET=${TYPEBOT_ENCRYPTION_SECRET:-gere-uma-chave-aleatoria-32-chars}
+      - ADMIN_EMAIL=${TYPEBOT_ADMIN_EMAIL:-admin@seu-dominio.com}
+      - DISABLE_SIGNUP=false
+      - S3_ACCESS_KEY=${S3_ACCESS_KEY}
+      - S3_SECRET_KEY=${S3_SECRET_KEY}
+      - S3_BUCKET=${S3_BUCKET}
+      - S3_ENDPOINT=${S3_ENDPOINT}
+      - S3_REGION=${S3_REGION}
+    depends_on:
+      - postgres
+    networks:
+      - whatsapp-network
+
+  typebot-viewer:
+    image: baptistearno/typebot-viewer:latest
+    container_name: typebot-viewer
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/typebot
+    networks:
+      - whatsapp-network
+
+  # PostgreSQL
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_MULTIPLE_DATABASES=evolution,typebot
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh
+    networks:
+      - whatsapp-network
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - whatsapp-network
+
+  # N8N - Automação (opcional, para depois)
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=postgres
+      - DB_POSTGRESDB_PASSWORD=postgres
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-senha123}
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=America/Sao_Paulo
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      - postgres
+    networks:
+      - whatsapp-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  evolution_media:
+  n8n_data:
+
+networks:
+  whatsapp-network:
+    driver: bridge
