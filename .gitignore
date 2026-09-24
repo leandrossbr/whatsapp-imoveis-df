@@ -55,8 +55,13 @@ typebot/uploads/
 arte/fonts/*.ttf
 arte/entrada/*
 !arte/entrada/.gitkeep
+!arte/entrada/lux-fachada.jpg
+!arte/entrada/lux-interior.jpg
 arte/saida/*
 !arte/saida/.gitkeep
+# entregáveis finais versionados p/ sobreviver a reinícios do ambiente
+!arte/saida/lux-leandro-santos-1080x1920.jpg
+!arte/saida/lux-leandro-santos-1080x1920.png
 
 # N8N
 n8n/.n8n/

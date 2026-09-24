@@ -63,6 +63,18 @@ o imóvel continua visível no resto da imagem.
 Para medir as proporções: abra a imagem e divida as coordenadas em pixels
 pela largura/altura dela.
 
+## Recriação da peça LUX (Full HD vertical)
+
+`recriar_lux.py` reconstrói a arte LUX Home Boulevard dentro do ambiente, com
+fotos reais do empreendimento (`entrada/lux-fachada.jpg` e `entrada/lux-interior.jpg`,
+commitadas para sobreviver a reinícios), a copy original e a identidade do
+corretor (nome, WhatsApp, selo R$ 679 mil, CTA):
+
+```bash
+python3 arte/recriar_lux.py                 # saída: saida/lux-leandro-santos-1080x1920.*
+python3 arte/recriar_lux.py --foto MINHA.jpg  # com o rosto no círculo dourado
+```
+
 ## Personalização
 
 Tudo em `config.json`: nome, cargo, telefone, link wa.me, textos da oferta,
