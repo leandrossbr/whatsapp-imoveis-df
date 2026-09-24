@@ -47,5 +47,19 @@
     "marca_dagua_discreta": true,
     "foto_foco_vertical": 0.08,
     "_foto_foco_vertical_help": "0 = recorte quadrado começa no topo da foto (ideal p/ retratos verticais com rosto no alto); 0.5 = centro; 1 = base"
+  },
+
+  "remix": {
+    "_help": "Regiões normalizadas (0–1). recorte_arte é relativo ao arquivo original; o resto é relativo à arte já recortada.",
+    "recorte_arte": [0.0, 0.117, 1.0, 0.876],
+    "extensao_topo": 0.5,
+    "zona_foto_antiga": [0.012, 0.688, 0.262, 0.172],
+    "zona_texto_antigo": [0.276, 0.700, 0.468, 0.150],
+    "amostra_navy": [0.03, 0.93, 0.12, 0.97],
+    "amostra_ouro": [0.281, 0.706, 0.300, 0.716],
+    "texto_faixa": "FALAR DIRETO COM O CORRETOR",
+    "texto_cidade": "EM BRASÍLIA",
+    "alturas": { "faixa": 0.032, "nome": 0.040, "telefone": 0.040, "cidade": 0.016 },
+    "selo_preco": { "centro": [0.726, 0.592], "raio": 0.143 }
   }
 }
