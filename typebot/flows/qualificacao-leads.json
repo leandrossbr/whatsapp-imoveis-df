@@ -13,7 +13,7 @@
       "id": "boas_vindas",
       "type": "text",
       "position": { "x": 100, "y": 200 },
-      "content": "Olá! 👋 Sou o assistente virtual da **Imóveis DF**.\n\nEstou aqui para te ajudar a encontrar o imóvel ideal em Brasília de forma rápida e personalizada.\n\nPara começar, me diga: **qual seu nome?**",
+      "content": "Olá! 👋 Sou o assistente virtual do corretor **Leandro Santos** — **Imóveis DF**.\n\n🏢 **Apartamentos a partir de R$ 679 mil** em Brasília/DF!\n\nEstou aqui para te ajudar a encontrar o imóvel ideal de forma rápida e personalizada.\n\nPara começar, me diga: **qual seu nome?**",
       "next": "capturar_nome"
     },
     {
@@ -63,6 +63,22 @@
         { "label": "🏪 Comercial/Sala", "value": "comercial" }
       ],
       "variable": "tipo_imovel",
+      "next": "verificar_apartamento"
+    },
+    {
+      "id": "verificar_apartamento",
+      "type": "condition",
+      "position": { "x": 100, "y": 650 },
+      "conditions": [
+        { "variable": "tipo_imovel", "operator": "equals", "value": "apartamento", "next": "destaque_apartamentos" }
+      ],
+      "fallback": "comprar_regiao"
+    },
+    {
+      "id": "destaque_apartamentos",
+      "type": "text",
+      "position": { "x": -320, "y": 700 },
+      "content": "🏢 Ótima escolha, {{nome_cliente}}! Temos **apartamentos a partir de R$ 679 mil**, com opções prontas e em lançamento no DF.\n\nVamos refinar sua busca:",
       "next": "comprar_regiao"
     },
     {
@@ -247,7 +263,7 @@
       "id": "capturar_telefone",
       "type": "input",
       "position": { "x": 100, "y": 1100 },
-      "content": "Perfeito! {{nome_cliente}}, agora preciso do seu **WhatsApp com DDD** para nosso corretor especialista entrar em contato:",
+      "content": "Perfeito! {{nome_cliente}}, agora preciso do seu **WhatsApp com DDD** para o **Leandro Santos** entrar em contato pessoalmente:",
       "variable": "telefone",
       "placeholder": "61 9xxxx-xxxx",
       "next": "capturar_email"
@@ -265,7 +281,7 @@
       "id": "finalizar",
       "type": "text",
       "position": { "x": 100, "y": 1300 },
-      "content": "✅ **Cadastro concluído, {{nome_cliente}}!**\n\n📋 **Resumo do seu perfil:**\n• Tipo: {{tipo_negocio}}\n• Imóvel: {{tipo_imovel}}\n• Região: {{regiao}}\n• Valor: {{valor_compra}}{{valor_aluguel}}\n• Quartos: {{quartos}}\n• Urgência: {{urgencia}}\n\n🤝 Nosso corretor especialista em **{{regiao}}** entrará em contato no **{{telefone}}** em até **15 minutos** (horário comercial).\n\nEnquanto isso, pode acessar nosso site: **imoveisdf.com.br**\n\nObrigado por escolher a Imóveis DF! 🏠💚",
+      "content": "✅ **Cadastro concluído, {{nome_cliente}}!**\n\n📋 **Resumo do seu perfil:**\n• Tipo: {{tipo_negocio}}\n• Imóvel: {{tipo_imovel}}\n• Região: {{regiao}}\n• Valor: {{valor_compra}}{{valor_aluguel}}\n• Quartos: {{quartos}}\n• Urgência: {{urgencia}}\n\n🤝 **Leandro Santos**, especialista em **{{regiao}}**, entrará em contato no **{{telefone}}** em até **15 minutos** (horário comercial).\n\n📲 Fale direto no WhatsApp: **(61) 99658-7484** → wa.me/5561996587484\n\n💡 Confira: **apartamentos a partir de R$ 679 mil**!\n\nObrigado por escolher a Imóveis DF! 🏠💚",
       "next": "webhook_crm"
     },
     {
@@ -281,7 +297,7 @@
       "id": "finalizar_captacao",
       "type": "text",
       "position": { "x": 400, "y": 900 },
-      "content": "✅ **Recebemos sua solicitação de captação!**\n\nNosso especialista em captação entrará em contato no **{{telefone_captacao}}** em até **30 minutos** para agendar a avaliação gratuita.\n\nObrigado! 🏠💚",
+      "content": "✅ **Recebemos sua solicitação de captação!**\n\nO **Leandro Santos** entrará em contato no **{{telefone_captacao}}** em até **30 minutos** para agendar a avaliação gratuita.\n\n📲 WhatsApp: **(61) 99658-7484**\n\nObrigado! 🏠💚",
       "next": "webhook_captacao"
     },
     {

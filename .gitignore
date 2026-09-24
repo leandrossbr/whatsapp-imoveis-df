@@ -51,6 +51,13 @@ secrets/
 # Typebot media uploads
 typebot/uploads/
 
+# Arte de divulgação: binários locais (fontes, fotos de entrada, artes geradas)
+arte/fonts/*.ttf
+arte/entrada/*
+!arte/entrada/.gitkeep
+arte/saida/*
+!arte/saida/.gitkeep
+
 # N8N
 n8n/.n8n/
 

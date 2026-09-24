@@ -1,6 +1,8 @@
 # 🏠 WhatsApp Imóveis DF - Assistente Virtual Inteligente
 
-Sistema completo de atendimento via WhatsApp para corretor de imóveis em Brasília/DF, com qualificação humanizada de leads e arquitetura preparada para agentes de IA especializados.
+Sistema completo de atendimento via WhatsApp do corretor **Leandro Santos** — **(61) 99658-7484** — para imóveis em Brasília/DF, com qualificação humanizada de leads, arte de divulgação em Full HD e arquitetura preparada para agentes de IA especializados.
+
+> 🏢 **Oferta destacada:** apartamentos **a partir de R$ 679 mil**.
 
 ## 🎯 Objetivo
 
@@ -90,19 +92,59 @@ docker-compose up -d
 ### 7. Conecte Evolution → Typebot
 No Evolution Manager, configure webhook da instância para a URL do Typebot.
 
+## 📇 Identidade & Contato do Corretor
+
+| Campo | Valor |
+|-------|-------|
+| Nome | **Leandro Santos** |
+| Cargo | Corretor de Imóveis — Brasília/DF |
+| WhatsApp | **(61) 99658-7484** |
+| Link direto | https://wa.me/5561996587484 |
+| Oferta destaque | Apartamentos **a partir de R$ 679 mil** |
+
+Esses dados vivem em `.env.example` (variáveis `CORRETOR_*` / `OFERTA_*`) e em
+`arte/config.json` (usado pelo gerador de arte). Ao trocar corretor/oferta,
+edite os dois e regenere a arte.
+
+## 🎨 Arte de Divulgação (Full HD para WhatsApp)
+
+Gera a peça de impacto com a foto do imóvel de fundo, a foto do corretor em
+recorte circular, nome, WhatsApp e a oferta:
+
+```bash
+pip install pillow
+python3 arte/gerar_arte.py \
+    --fundo arte/entrada/arte-original.jpg \
+    --foto  arte/entrada/foto-leandro.jpg
+```
+
+Saídas em `arte/saida/`:
+- `leandro-santos-paisagem-1920x1080.jpg` — Full HD paisagem (conversa/transmissão)
+- `leandro-santos-vertical-1080x1920.jpg` — Full HD vertical (Status/Stories)
+
+Se a arte original tiver nome/telefone de outro corretor gravados, informe os
+retângulos a apagar em `arte/config.json` → `zonas_ocultar` (valores de 0 a 1).
+Detalhes em [`arte/README.md`](arte/README.md).
+
 ## 📁 Estrutura do Projeto
 
 ```
 whatsapp-imoveis-df/
 ├── docker-compose.yml              # Orquestração completa
-├── .env.example                    # Variáveis de ambiente
+├── .env.example                    # Variáveis de ambiente (inclui CORRETOR_*)
 ├── init-multiple-dbs.sh            # Init PostgreSQL multi-db
 ├── evolution/
 │   └── config/
 │       └── .env.example            # Config Evolution API
 ├── typebot/
 │   └── flows/
-│       └── qualificacao-leads.json # Fluxo principal
+│       └── qualificacao-leads.json # Fluxo principal (com Leandro Santos + oferta)
+├── arte/                           # Gerador de arte Full HD p/ WhatsApp
+│   ├── gerar_arte.py
+│   ├── config.json                 # Nome, telefone, oferta, cores, zonas_ocultar
+│   ├── fonts/                      # Montserrat/Bebas/Poppins (baixadas, fora do git)
+│   ├── entrada/                    # foto do corretor + imagem do imóvel (local)
+│   └── saida/                      # PNG/JPG gerados (local)
 ├── agents/                         # Agentes IA (futuro)
 │   ├── atendimento/
 │   ├── crm/

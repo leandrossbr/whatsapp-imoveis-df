@@ -1,0 +1,49 @@
+{
+  "_comentario": "Dados da arte de WhatsApp. Edite aqui e rode: python3 arte/gerar_arte.py",
+
+  "marca": {
+    "nome": "IMÓVEIS DF",
+    "tagline": "BRASÍLIA • DF"
+  },
+
+  "corretor": {
+    "nome": "LEANDRO SANTOS",
+    "cargo": "CORRETOR DE IMÓVEIS",
+    "regiao": "BRASÍLIA • DF",
+    "telefone_display": "(61) 99658-7484",
+    "telefone_e164": "5561996587484",
+    "whatsapp_link": "https://wa.me/5561996587484",
+    "creci": ""
+  },
+
+  "oferta": {
+    "produto": "APARTAMENTOS",
+    "chamada": "A PARTIR DE",
+    "valor": "R$ 679 MIL",
+    "selo": "ALTO PADRÃO • DF"
+  },
+
+  "cta": "CHAME NO WHATSAPP",
+
+  "cores": {
+    "verde_escuro": "#04231A",
+    "verde": "#0B3D2E",
+    "dourado": "#D4AF37",
+    "dourado_claro": "#F6DC8A",
+    "branco": "#FFFFFF",
+    "cinza_claro": "#DCE6E1",
+    "whatsapp": "#25D366",
+    "scrim_topo": 110,
+    "scrim_base": 215
+  },
+
+  "zonas_ocultar": [],
+  "_zonas_ocultar_help": "Retângulos [x, y, largura, altura] em proporção (0 a 1) da imagem ORIGINAL, para apagar nome/telefone antigos do corretor anterior. Ex: [[0.04, 0.78, 0.55, 0.18]]",
+
+  "ajustes": {
+    "foto_lado": "esquerda",
+    "escurecer_fundo": 0.32,
+    "nitidez_extra": true,
+    "marca_dagua_discreta": true
+  }
+}
