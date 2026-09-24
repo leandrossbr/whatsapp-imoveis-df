@@ -234,12 +234,12 @@ def texto_gradiente(
     return int(larg), int(alt)
 
 
-def cover(img: Image.Image, largura: int, altura: int) -> Image.Image:
-    """Redimensiona preenchendo o quadro todo (corte central, sem distorcer)."""
+def cover(img: Image.Image, largura: int, altura: int, fx: float = 0.5, fy: float = 0.5) -> Image.Image:
+    """Redimensiona preenchendo o quadro todo (sem distorcer). fx/fy = foco do corte (0–1)."""
     proporcao = max(largura / img.width, altura / img.height)
     nova = img.resize((max(int(img.width * proporcao), 1), max(int(img.height * proporcao), 1)), Image.LANCZOS)
-    esquerda = (nova.width - largura) // 2
-    topo = (nova.height - altura) // 2
+    esquerda = int((nova.width - largura) * min(max(fx, 0.0), 1.0))
+    topo = int((nova.height - altura) * min(max(fy, 0.0), 1.0))
     return nova.crop((esquerda, topo, esquerda + largura, topo + altura)).convert("RGBA")
 
 
@@ -268,9 +268,9 @@ def fundo_demo(largura: int, altura: int) -> Image.Image:
     return img.convert("RGBA")
 
 
-def recorte_circular(foto: Image.Image, diametro: int) -> Image.Image:
-    """Recorte redondo da foto do corretor."""
-    imagem = cover(foto, diametro, diametro).convert("RGBA")
+def recorte_circular(foto: Image.Image, diametro: int, fy: float = 0.5) -> Image.Image:
+    """Recorte redondo da foto do corretor (fy desloca o foco p/ manter o rosto)."""
+    imagem = cover(foto, diametro, diametro, 0.5, fy).convert("RGBA")
     imagem = ImageEnhance.Contrast(imagem.convert("RGB")).enhance(1.04).convert("RGBA")
     imagem = ImageEnhance.Color(imagem).enhance(1.06)
     mascara = Image.new("L", (diametro * 4, diametro * 4), 0)
@@ -424,7 +424,8 @@ class Arte:
         )
 
         if self.foto:
-            recorte = recorte_circular(self.foto, diametro)
+            fy = self.cfg.get("ajustes", {}).get("foto_foco_vertical", 0.5)
+            recorte = recorte_circular(self.foto, diametro, fy)
         else:
             recorte = Image.new("RGBA", (diametro, diametro), (0, 0, 0, 0))
             dr = ImageDraw.Draw(recorte)

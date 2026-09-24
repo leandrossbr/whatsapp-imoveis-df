@@ -44,6 +44,8 @@
     "foto_lado": "esquerda",
     "escurecer_fundo": 0.32,
     "nitidez_extra": true,
-    "marca_dagua_discreta": true
+    "marca_dagua_discreta": true,
+    "foto_foco_vertical": 0.08,
+    "_foto_foco_vertical_help": "0 = recorte quadrado começa no topo da foto (ideal p/ retratos verticais com rosto no alto); 0.5 = centro; 1 = base"
   }
 }
